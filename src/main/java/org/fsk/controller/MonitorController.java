@@ -179,7 +179,7 @@ public class MonitorController implements Initializable {
         stopMonitor();
     }
 
-    public void stopMonitor(){
+    public void stopMonitor() {
         if (scheduledService.isRunning()) {
             scheduledService.cancel();
             startBtn.setDisable(false);
@@ -293,7 +293,7 @@ public class MonitorController implements Initializable {
             ma30Big = new BigDecimal(lastRecord.getMa_price30()).setScale(2, BigDecimal.ROUND_HALF_DOWN);
             setDeltaMa(stockMaTable, lastRecord.getMa_price5(), minorRecord.getMa_price5(),
                     lastRecord.getMa_price10(), minorRecord.getMa_price10());
-        } else if (TransTimeUtil.isTransTime() || TransTimeUtil.isTodayBeforeOpenTime()) {
+        } else if (TransTimeUtil.isTransTime()) {
             // 股票为交易时间，则动态计算
             // 股票为当天收盘非交易时间，则当前价格减最后一天的价格
             int days = 0;
