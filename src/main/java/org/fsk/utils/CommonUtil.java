@@ -1,6 +1,7 @@
 package org.fsk.utils;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.fsk.Constants;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.fsk.Constants.FILE_PATH;
@@ -42,9 +44,42 @@ public class CommonUtil {
         return "";
     }
 
-    public static void showAlertWithoutHeaderText(String text) {
+    public static Optional<ButtonType> showAlertConfirmText(String text) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("确认提示");
+
+        // Header Text: null
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+
+        return alert.showAndWait();
+    }
+
+    public static void showAlertErrorText(String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("错误提示");
+
+        // Header Text: null
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+
+        alert.showAndWait();
+    }
+
+    public static void showAlertWarningText(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("提示");
+
+        // Header Text: null
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+
+        alert.showAndWait();
+    }
+
+    public static void showAlertInfoText(String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("信息提示");
 
         // Header Text: null
         alert.setHeaderText(null);
@@ -117,11 +152,12 @@ public class CommonUtil {
         } catch (Exception e) {
             log.error("读取文件异常：", e);
         }
-        return result.toString().replace("\r","").replace("\n","");
+        return result.toString().replace("\r", "").replace("\n", "");
     }
 
     /**
      * base64编码
+     *
      * @param string
      * @param path
      * @return

@@ -35,9 +35,7 @@
                         <TableColumn fx:id="zsDeltaPrice" prefWidth="130.0" text="涨跌指数" />
                     </columns>
                 </TableView>
-                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="92.0"
-                          layoutY="132.0" prefHeight="77.0" prefWidth="684.0" scrollTop="500.0" wrapText="true"
-                          promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^"/>
+                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="92.0" layoutY="132.0" prefHeight="77.0" prefWidth="684.0" promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^" scrollTop="500.0" wrapText="true" />
                 <Button fx:id="addStockBtn" layoutX="890.0" layoutY="70.0" mnemonicParsing="false" onAction="#addStock" prefHeight="34.0" prefWidth="87.0" text="监控设置">
                     <font>
                         <Font size="16.0" />
@@ -93,14 +91,14 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="964.0">
+                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="962.0">
                                             <columns>
                                                 <TableColumn fx:id="sgStName" prefWidth="80.0" text="名称" />
                                                 <TableColumn fx:id="sgStCurrPrice" prefWidth="70.0" text="现价" />
                                                 <TableColumn fx:id="stCutPrice" prefWidth="70.0" text="止损价格" />
                                                 <TableColumn fx:id="stCutRate" prefWidth="70.0" text="止损幅度" />
                                                 <TableColumn fx:id="stBuyCondition" prefWidth="205.0" text="买入条件" />
-                                                <TableColumn fx:id="stRemark" prefWidth="534.0" text="操作策略说明" />
+                                                <TableColumn fx:id="stRemark" prefWidth="465.0" text="操作策略说明" />
                                             </columns>
                                         </TableView>
                                     </children>

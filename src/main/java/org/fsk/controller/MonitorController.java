@@ -159,7 +159,7 @@ public class MonitorController implements Initializable {
 
         if (TransTimeUtil.isTransTime()) {
             if (TransTimeUtil.isLunchBreak()) {
-                CommonUtil.showAlertWithoutHeaderText("午间休市，不能交易！");
+                CommonUtil.showAlertWarningText("午间休市，不能交易！");
                 return;
             }
             scheduledService.setExecutor(Executors.newFixedThreadPool(2));
@@ -171,7 +171,7 @@ public class MonitorController implements Initializable {
             map.put(id, scheduledService);
             button.setDisable(true);
         } else {
-            CommonUtil.showAlertWithoutHeaderText("市场已休市，不能交易！");
+            CommonUtil.showAlertWarningText("市场已休市，不能交易！");
         }
     }
 

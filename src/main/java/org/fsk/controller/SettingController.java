@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -34,7 +33,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -115,29 +113,18 @@ public class SettingController implements Initializable {
                                     SharesListTable clickedStu = this.getTableView().getItems().get(this.getIndex());
                                     String sharesCode = clickedStu.getSharesCode();
                                     log.info("删除个股：{}", sharesCode);
-                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                                    alert.setTitle("删除个股");
-                                    // Header Text: null
-                                    alert.setHeaderText(null);
                                     String hitMsg = "删除个股[" + clickedStu.getSharesName() + "]";
-                                    alert.setContentText("确定要" + hitMsg + "吗？");
-                                    Optional<ButtonType> option = alert.showAndWait();
-                                    if (option.get() == ButtonType.OK) {
+                                    Optional<ButtonType> option = CommonUtil.showAlertConfirmText("确定要" + hitMsg + "吗？");
+                                    if (ButtonType.OK.equals(option.get())) {
                                         Constants.stockSet.remove(sharesCode);
                                         Constants.monitorStockMap.remove(sharesCode);
                                         SettingFileDTO settingFile = CommonUtil.getSettingFile();
+                                        assert settingFile != null;
                                         List<SharesDTO> shares = settingFile.getShares();
-                                        Iterator<SharesDTO> iterator = shares.iterator();
-                                        while (iterator.hasNext()) {
-                                            SharesDTO next = iterator.next();
-                                            if (next.getCode().equals(sharesCode)) {
-                                                iterator.remove();
-                                            }
-                                        }
+                                        shares.removeIf(next -> next.getCode().equals(sharesCode));
                                         log.info("最新数据：{}", settingFile);
                                         CommonUtil.updateDataFile(settingFile);
-                                        CommonUtil.showAlertWithoutHeaderText(hitMsg + "成功");
-                                        // 刷新
+                                        CommonUtil.showAlertInfoText(hitMsg + "成功");
                                     }
                                 });
                             }
@@ -212,7 +199,7 @@ public class SettingController implements Initializable {
         boolean res = CommonUtil.updateDataFile(fileDTO);
         if (res) {
             log.info("大盘备注更新，文件更新成功");
-            CommonUtil.showAlertWithoutHeaderText("大盘备注更新成功！");
+            CommonUtil.showAlertInfoText("大盘备注更新成功！");
         }
 
     }
@@ -225,12 +212,12 @@ public class SettingController implements Initializable {
         int codeLength = code.length();
         int baseLength = 6;
         if (codeLength < baseLength) {
-            CommonUtil.showAlertWithoutHeaderText("股票代码错误");
+            CommonUtil.showAlertErrorText("股票代码错误");
             return;
         }
         String cutPriceText = addCutPriceText.getText();
         if (StringUtils.isBlank(cutPriceText)) {
-            CommonUtil.showAlertWithoutHeaderText("未设置止损");
+            CommonUtil.showAlertErrorText("未设置止损");
             return;
         }
         cutPriceText = cutPriceText.trim();
@@ -242,7 +229,7 @@ public class SettingController implements Initializable {
 
         Map<String, StockInfoObject> stockData = CommonUtil.callStockData(set);
         if (stockData == null || stockData.isEmpty()) {
-            CommonUtil.showAlertWithoutHeaderText("该股票[" + code + "]不存在");
+            CommonUtil.showAlertErrorText("该股票[" + code + "]不存在");
             return;
         }
         StockInfoObject stockInfoObject = stockData.get(code);
@@ -277,16 +264,16 @@ public class SettingController implements Initializable {
         settingFile.setShares(shares);
         CommonUtil.updateDataFile(settingFile);
         Constants.monitorStockMap.put(code, stockInfoObject);
-        CommonUtil.showAlertWithoutHeaderText("添加个股成功");
+        CommonUtil.showAlertInfoText("添加个股成功");
 
     }
 
     public void updateSharesCommit(ActionEvent actionEvent) {
         String codeName = updateChoiceBox.getValue();
-        String code = codeName.substring(codeName.indexOf(Constants.LEFT_ZKH)+1, codeName.indexOf(Constants.RIGHT_ZKH));
+        String code = codeName.substring(codeName.indexOf(Constants.LEFT_ZKH) + 1, codeName.indexOf(Constants.RIGHT_ZKH));
         String cutPriceText = updateCutPriceText.getText();
         if (StringUtils.isBlank(cutPriceText)) {
-            CommonUtil.showAlertWithoutHeaderText("未设置止损");
+            CommonUtil.showAlertErrorText("未设置止损");
             return;
         }
         cutPriceText = cutPriceText.trim();
@@ -314,7 +301,7 @@ public class SettingController implements Initializable {
         settingFile.setShares(shares);
         CommonUtil.updateDataFile(settingFile);
         Constants.monitorStockMap.put(code, stockInfoObject);
-        CommonUtil.showAlertWithoutHeaderText("修改个股成功");
+        CommonUtil.showAlertInfoText("修改个股成功");
     }
 
 }
