@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<ScrollPane maxHeight="-Infinity" hbarPolicy="NEVER" vbarPolicy="NEVER" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" pannable="true" prefHeight="626.0" prefWidth="816.0"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.fsk.controller.MonitorController">
+    <content>
+        <AnchorPane maxHeight="623.0" maxWidth="815.0" minHeight="623.0" minWidth="815.0" prefHeight="623.0"
+                    prefWidth="815.0">
+            <children>
+                <Button fx:id="startBtn" layoutX="697.0" layoutY="14.0" mnemonicParsing="false" onAction="#monitorStart"
+                        text="开始监测"/>
+                <Button fx:id="stopBtn" layoutX="697.0" layoutY="61.0" mnemonicParsing="false" onAction="#monitorStop"
+                        text="停止监测"/>
+                <TableView fx:id="zsTable" layoutX="2.0" layoutY="2.0" prefHeight="118.0" prefWidth="646.0">
+                    <columns>
+                        <TableColumn fx:id="name" prefWidth="110.0" text="名称"/>
+                        <TableColumn fx:id="currentPrice" prefWidth="134.0" text="当前指数"/>
+                        <TableColumn fx:id="zsChg" prefWidth="119.0" text="涨跌幅"/>
+                        <TableColumn fx:id="zsVol" prefWidth="152.0" text="成交额"/>
+                    </columns>
+                </TableView>
+                <TextArea blendMode="SRC_ATOP" editable="false" layoutX="97.0" layoutY="132.0" prefHeight="73.0"
+                          prefWidth="550.0" scrollTop="500.0" text="3250以下为低风险区域。3200附近买入的机会不是一天两天"/>
+                <TableView fx:id="stockTable" layoutX="14.0" layoutY="228.0" prefHeight="373.0" prefWidth="777.0">
+                    <columns>
+                        <TableColumn fx:id="stockId" prefWidth="52.0" text="序号"/>
+                        <TableColumn fx:id="stName" prefWidth="98.0" text="名称"/>
+                        <TableColumn fx:id="stCurrPrice" prefWidth="85.0" text="现价"/>
+                        <TableColumn fx:id="stChg" prefWidth="75.0" text="涨跌幅"/>
+                        <TableColumn fx:id="stMinPrice" prefWidth="75.0" text="最低价"/>
+                        <TableColumn fx:id="stMaxPrice" prefWidth="75.0" text="最高价"/>
+                        <TableColumn fx:id="stVol" prefWidth="75.0" text="成交额"/>
+                        <TableColumn fx:id="stCutPrice" prefWidth="75.0" text="止损价格"/>
+                        <TableColumn fx:id="stRemark" prefWidth="165.0" text="备注"/>
+                    </columns>
+                </TableView>
+                <Button layoutX="14.0" layoutY="132.0" mnemonicParsing="false" text="大盘备注"/>
+                <Button layoutX="697.0" layoutY="127.0" mnemonicParsing="false" text="编辑个股"/>
+                <Button layoutX="697.0" layoutY="175.0" mnemonicParsing="false" text="删除个股"/>
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>

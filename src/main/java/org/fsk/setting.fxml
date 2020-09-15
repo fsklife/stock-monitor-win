@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="366.0" prefWidth="516.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fsk.controller.SettingController">
+  <tabs>
+    <Tab onSelectionChanged="#setStockRemark" text="大盘备注">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="zsRemarkTextArea" layoutX="14.0" layoutY="14.0" prefHeight="282.0" prefWidth="338.0" promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^" wrapText="true" />
+                  <Button layoutX="398.0" layoutY="14.0" mnemonicParsing="false" onAction="#updateZsRemark" text="提  交">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="399.0" layoutY="78.0" mnemonicParsing="false" onAction="#resetZsRemark" text="重  置">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="新增个股">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <Label layoutX="14.0" layoutY="24.0" text="股票代码：">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="addCodeText" layoutX="104.0" layoutY="22.0" prefHeight="32.0" prefWidth="261.0" promptText="6位代码，基金须加前缀sh或sz" />
+                <Label layoutX="14.0" layoutY="79.0" text="止损价格：">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="addCutPriceText" layoutX="104.0" layoutY="76.0" prefHeight="32.0" prefWidth="262.0" />
+                <Label layoutX="14.0" layoutY="135.0" text="买入条件：">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="addBuyText" layoutX="104.0" layoutY="130.0" prefHeight="32.0" prefWidth="397.0" />
+                <Label layoutX="14.0" layoutY="184.0" text="操作策略：">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextArea fx:id="addOptStgText" layoutX="104.0" layoutY="184.0" prefHeight="133.0" prefWidth="398.0" wrapText="true" />
+
+                <Button layoutX="425.0" layoutY="20.0" mnemonicParsing="false" onAction="#addNewShares" text="提  交">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Button>
+                <Button layoutX="425.0" layoutY="62.0" mnemonicParsing="false" text="重  置">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Button>
+            </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+      <Tab onSelectionChanged="#changeSharesData" text="修改个股">
+          <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                      <Label layoutX="14.0" layoutY="24.0" text="选择个股：">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+                      <ChoiceBox fx:id="updateChoiceBox" layoutX="104.0" layoutY="22.0" prefHeight="30.0" prefWidth="261.0">
+                      </ChoiceBox>
+                      <Label layoutX="14.0" layoutY="79.0" text="止损价格：">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+                      <TextField fx:id="updateCutPriceText" layoutX="104.0" layoutY="76.0" prefHeight="32.0" prefWidth="262.0" />
+                      <Label layoutX="14.0" layoutY="135.0" text="买入条件：">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+                      <TextField fx:id="updateBuyText" layoutX="104.0" layoutY="130.0" prefHeight="32.0" prefWidth="397.0" />
+                      <Label layoutX="14.0" layoutY="184.0" text="操作策略：">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+                      <TextArea fx:id="updateOptStgText" layoutX="104.0" layoutY="184.0" prefHeight="133.0" prefWidth="398.0" wrapText="true" />
+
+                      <Button layoutX="425.0" layoutY="20.0" mnemonicParsing="false" text="提  交"
+                              onAction="#updateSharesCommit">
+                          <font>
+                              <Font size="16.0" />
+                          </font></Button>
+                      <Button layoutX="425.0" layoutY="62.0" mnemonicParsing="false" text="重  置">
+                          <font>
+                              <Font size="16.0" />
+                          </font></Button>
+
+                  </children>
+              </AnchorPane>
+          </content>
+      </Tab>
+      <Tab onSelectionChanged="#showSharesList" text="个股列表">
+          <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="sharesListTable" layoutX="14.0" layoutY="10.0" prefHeight="308.0" prefWidth="369.0">
+                    <columns>
+                      <TableColumn fx:id="sharesCodeCol" prefWidth="107.0" text="代码" />
+                      <TableColumn fx:id="sharesNameCol" prefWidth="118.0" text="名称" />
+                        <TableColumn fx:id="deleteSharesCol" prefWidth="132.0" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+          </content>
+      </Tab>
+  </tabs>
+</TabPane>

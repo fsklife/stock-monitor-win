@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="653.0" prefWidth="983.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fsk.controller.MonitorController">
+    <content>
+        <AnchorPane maxHeight="745.0" maxWidth="997.0" minHeight="623.0" minWidth="815.0" prefHeight="667.0" prefWidth="990.0">
+            <children>
+                <Button fx:id="startBtn" layoutX="782.0" layoutY="14.0" mnemonicParsing="false" onAction="#monitorStart" text="开始监测">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+                <Button fx:id="stopBtn" layoutX="890.0" layoutY="14.0" mnemonicParsing="false" onAction="#monitorStop" text="停止监测">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+                <TableView fx:id="zsTable" layoutX="2.0" layoutY="2.0" prefHeight="118.0" prefWidth="773.0">
+                    <columns>
+                        <TableColumn fx:id="name" prefWidth="110.0" text="名称" />
+                        <TableColumn fx:id="currentPrice" prefWidth="130.0" text="当前指数" />
+                        <TableColumn fx:id="zsChg" prefWidth="119.0" text="涨跌幅" />
+                        <TableColumn fx:id="zsVol" prefWidth="152.0" text="成交额" />
+                        <TableColumn fx:id="zsPrevClose" prefWidth="130.0" text="昨日收盘" />
+                        <TableColumn fx:id="zsDeltaPrice" prefWidth="130.0" text="涨跌指数" />
+                    </columns>
+                </TableView>
+                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="92.0"
+                          layoutY="132.0" prefHeight="77.0" prefWidth="684.0" scrollTop="500.0" wrapText="true"
+                          promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^"/>
+                <Button fx:id="addStockBtn" layoutX="890.0" layoutY="70.0" mnemonicParsing="false" onAction="#addStock" prefHeight="34.0" prefWidth="87.0" text="监控设置">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+                <TabPane layoutX="5.0" layoutY="231.0" prefHeight="390.0" prefWidth="971.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab onSelectionChanged="#changeSharesRealData" text="个股实时数据">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <TableView fx:id="stockTable" layoutX="6.0" layoutY="6.0" prefHeight="343.0" prefWidth="964.0">
+                                            <columns>
+                                                <TableColumn fx:id="stCode" prefWidth="90.0" text="代码" />
+                                                <TableColumn fx:id="stName" prefWidth="110.0" text="名称" />
+                                                <TableColumn fx:id="stCurrPrice" prefWidth="85.0" text="现价" />
+                                                <TableColumn fx:id="stChg" prefWidth="75.0" text="涨跌幅" />
+                                                <TableColumn fx:id="stDeltaPrice" prefWidth="85.0" text="涨跌价格" />
+                                                <TableColumn fx:id="stMinPrice" prefWidth="75.0" text="最低价" />
+                                                <TableColumn fx:id="stMaxPrice" prefWidth="75.0" text="最高价" />
+                                                <TableColumn fx:id="stVol" prefWidth="86.0" text="成交额" />
+                                                <TableColumn fx:id="currOpen" prefWidth="93.0" text="今日开盘价" />
+                                                <TableColumn fx:id="prevClose" prefWidth="92.0" text="昨日收盘价" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab onSelectionChanged="#changeStockMA" text="均线变量预估">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <TableView fx:id="stockMaTable" layoutX="5.0" layoutY="4.0" prefHeight="345.0" prefWidth="964.0">
+                                            <columns>
+                                                <TableColumn fx:id="maStName" prefWidth="112.0" text="名称" />
+                                                <TableColumn fx:id="todayMA5" prefWidth="85.0" text="当前5均" />
+                                                <TableColumn fx:id="todayMA10" prefWidth="75.0" text="当前10均" />
+                                                <TableColumn fx:id="todayMA20" prefWidth="75.0" text="当前20均" />
+                                                <TableColumn fx:id="tomorrowMA5" prefWidth="75.0" text="明日5均" />
+                                                <TableColumn fx:id="afterDayMA5" prefWidth="75.0" text="后日5均" />
+                                                <TableColumn fx:id="tomorrowMA10" prefWidth="75.0" text="明日10均" />
+                                                <TableColumn fx:id="afterDayMA10" prefWidth="75.0" text="后日10均" />
+                                                <TableColumn fx:id="maShape" prefWidth="79.0" text="均线形态" />
+                                                <TableColumn fx:id="maRemark" prefWidth="237.0" text="均线走势" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab onSelectionChanged="#changeTransStrategy" text="个股交易策略">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="964.0">
+                                            <columns>
+                                                <TableColumn fx:id="sgStName" prefWidth="80.0" text="名称" />
+                                                <TableColumn fx:id="sgStCurrPrice" prefWidth="70.0" text="现价" />
+                                                <TableColumn fx:id="stCutPrice" prefWidth="70.0" text="止损价格" />
+                                                <TableColumn fx:id="stCutRate" prefWidth="70.0" text="止损幅度" />
+                                                <TableColumn fx:id="stBuyCondition" prefWidth="205.0" text="买入条件" />
+                                                <TableColumn fx:id="stRemark" prefWidth="534.0" text="操作策略说明" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+                <Label layoutX="5.0" layoutY="132.0" text="大盘备注：">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label layoutX="790.0" layoutY="133.0" text="日期：">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label layoutX="790.0" layoutY="171.0" text="时间：">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="transDate" layoutX="838.0" layoutY="133.0" prefHeight="20.0" prefWidth="115.0">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="transTime" layoutX="837.0" layoutY="171.0" prefHeight="20.0" prefWidth="115.0">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>
