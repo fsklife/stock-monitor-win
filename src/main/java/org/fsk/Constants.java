@@ -27,7 +27,7 @@ public class Constants {
     public static final String CY_CODE = "sz399006";
 
     public static final int OPEN_TIME = 91500;
-    public static final int CLOSE_TIME = 150005;
+    public static final int CLOSE_TIME = 150300;
     public static final BigDecimal ZERO_BIG = new BigDecimal("0");
 
     /**

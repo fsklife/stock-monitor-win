@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.fsk.Constants;
 import org.fsk.Main;
 import org.fsk.SettingApplication;
+import org.fsk.StageManager;
 import org.fsk.pojo.SettingFileDTO;
 import org.fsk.pojo.SharesDTO;
 import org.fsk.pojo.StockHistoryObject;
@@ -35,13 +36,12 @@ import org.fsk.pojo.StrategyTable;
 import org.fsk.pojo.ZsTable;
 import org.fsk.service.MonitorScheduledService;
 import org.fsk.utils.CommonUtil;
-import org.fsk.utils.DateUtil;
 import org.fsk.utils.JacksonUtil;
 import org.fsk.utils.OkHttpUtil;
+import org.fsk.utils.TransTimeUtil;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +74,7 @@ public class MonitorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        StageManager.putMainCtrl(this);
         SettingFileDTO settingFile = CommonUtil.getSettingFile();
         if (settingFile != null) {
             StockMarketDTO stock = settingFile.getStock();
@@ -152,12 +153,12 @@ public class MonitorController implements Initializable {
             if (!running) {
                 scheduledService.restart();
                 button.setDisable(true);
+                return;
             }
-            return;
         }
 
-        if (isTransTime()) {
-            if (isLunchBreak()) {
+        if (TransTimeUtil.isTransTime()) {
+            if (TransTimeUtil.isLunchBreak()) {
                 CommonUtil.showAlertWithoutHeaderText("午间休市，不能交易！");
                 return;
             }
@@ -175,8 +176,11 @@ public class MonitorController implements Initializable {
     }
 
     public void monitorStop(ActionEvent actionEvent) {
-        if (isTransTime()) {
-            MonitorScheduledService scheduledService = (MonitorScheduledService) map.get(map.get("__startBtn"));
+        stopMonitor();
+    }
+
+    public void stopMonitor(){
+        if (scheduledService.isRunning()) {
             scheduledService.cancel();
             startBtn.setDisable(false);
         }
@@ -271,7 +275,7 @@ public class MonitorController implements Initializable {
         BigDecimal pre2Ma20Big = Constants.ZERO_BIG;
         BigDecimal pre2Ma10Big = Constants.ZERO_BIG;
         BigDecimal pre2Ma5Big = Constants.ZERO_BIG;
-        if (isNotTodayTime() || isTodayCloseTime()) {
+        if (TransTimeUtil.isNotTodayTime() || TransTimeUtil.isTodayCloseTime()) {
             // 非当天时间 ，则
             preMa5Big = new BigDecimal(minorRecord.getMa_price5());
             preMa10Big = new BigDecimal(minorRecord.getMa_price10());
@@ -289,7 +293,7 @@ public class MonitorController implements Initializable {
             ma30Big = new BigDecimal(lastRecord.getMa_price30()).setScale(2, BigDecimal.ROUND_HALF_DOWN);
             setDeltaMa(stockMaTable, lastRecord.getMa_price5(), minorRecord.getMa_price5(),
                     lastRecord.getMa_price10(), minorRecord.getMa_price10());
-        } else if (isTransTime() || isTodayBeforeOpenTime()) {
+        } else if (TransTimeUtil.isTransTime() || TransTimeUtil.isTodayBeforeOpenTime()) {
             // 股票为交易时间，则动态计算
             // 股票为当天收盘非交易时间，则当前价格减最后一天的价格
             int days = 0;
@@ -423,49 +427,6 @@ public class MonitorController implements Initializable {
         String result = OkHttpUtil.get(url, null);
         List<StockHistoryObject> objectList = JacksonUtil.parseList(result, StockHistoryObject.class);
         return objectList;
-    }
-
-    private boolean isTransTime() {
-        Date date = new Date();
-        int weekIndex = DateUtil.getDayWeekIndex(date);
-        int timeInt = Integer.parseInt(DateUtil.getHHmmss());
-        StockInfoObject monitorSh = Constants.monitorSh;
-        int intervalDays = DateUtil.getIntervalDays(date, DateUtil.parseDate(monitorSh.getDate(), DateUtil.DATE_STYLE_YYYY_MM_DD));
-        boolean transFlag =
-                intervalDays == 0 && (weekIndex == 0 || weekIndex == 6 || (timeInt >= Constants.OPEN_TIME && timeInt <= Constants.CLOSE_TIME));
-        return transFlag;
-    }
-
-    private boolean isLunchBreak() {
-        int timeInt = Integer.parseInt(DateUtil.getHHmmss());
-        return timeInt >= 113001 && timeInt <= 130001;
-    }
-
-    private boolean isTodayBeforeOpenTime() {
-        Date date = new Date();
-        int timeInt = Integer.parseInt(DateUtil.getHHmmss());
-        StockInfoObject monitorSh = Constants.monitorSh;
-        int intervalDays = DateUtil.getIntervalDays(date, DateUtil.parseDate(monitorSh.getDate(), DateUtil.DATE_STYLE_YYYY_MM_DD));
-        boolean transFlag =
-                intervalDays == 0 && (timeInt < Constants.OPEN_TIME);
-        return transFlag;
-    }
-
-    private boolean isTodayCloseTime() {
-        Date date = new Date();
-        int timeInt = Integer.parseInt(DateUtil.getHHmmss());
-        StockInfoObject monitorSh = Constants.monitorSh;
-        int intervalDays = DateUtil.getIntervalDays(date, DateUtil.parseDate(monitorSh.getDate(), DateUtil.DATE_STYLE_YYYY_MM_DD));
-        boolean transFlag =
-                intervalDays == 0 && (timeInt > Constants.CLOSE_TIME);
-        return transFlag;
-    }
-
-    private boolean isNotTodayTime() {
-        Date date = new Date();
-        StockInfoObject monitorSh = Constants.monitorSh;
-        int intervalDays = DateUtil.getIntervalDays(date, DateUtil.parseDate(monitorSh.getDate(), DateUtil.DATE_STYLE_YYYY_MM_DD));
-        return intervalDays != 0;
     }
 
     public void changeTransStrategy(Event event) {

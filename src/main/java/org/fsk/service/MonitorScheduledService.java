@@ -13,10 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import lombok.Data;
 import org.fsk.Constants;
+import org.fsk.StageManager;
 import org.fsk.pojo.StockInfoObject;
 import org.fsk.pojo.StockTable;
 import org.fsk.pojo.ZsTable;
 import org.fsk.utils.CommonUtil;
+import org.fsk.utils.TransTimeUtil;
 
 import java.util.Map;
 import java.util.Set;
@@ -72,6 +74,9 @@ public class MonitorScheduledService extends ScheduledService<Void> {
             public void run() {
                 transDate.setText(Constants.monitorSh.getDate());
                 transTime.setText(Constants.monitorSh.getTime());
+                if (!TransTimeUtil.isTransTime() || TransTimeUtil.isLunchBreak()) {
+                    StageManager.getMainCtrl().stopMonitor();
+                }
             }
         });
     }
