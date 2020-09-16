@@ -26,7 +26,7 @@
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <TableView fx:id="zsTable" layoutX="6.0" layoutY="118.0" prefHeight="118.0" prefWidth="773.0">
+                <TableView fx:id="zsTable" layoutX="6.0" layoutY="135.0" prefHeight="118.0" prefWidth="773.0">
                     <columns>
                         <TableColumn fx:id="name" prefWidth="110.0" text="名称" />
                         <TableColumn fx:id="currentPrice" prefWidth="130.0" text="当前指数" />
@@ -36,7 +36,7 @@
                         <TableColumn fx:id="zsDeltaPrice" prefWidth="130.0" text="涨跌指数" />
                     </columns>
                 </TableView>
-                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="91.0" layoutY="11.0" prefHeight="84.0" prefWidth="684.0" promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^" scrollTop="500.0" wrapText="true" />
+                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="91.0" layoutY="39.0" prefHeight="84.0" prefWidth="684.0" promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^" scrollTop="500.0" wrapText="true" />
                 <Button fx:id="addStockBtn" layoutX="796.0" layoutY="61.0" mnemonicParsing="false" onAction="#addStock" prefHeight="34.0" prefWidth="87.0" text="监控设置">
                     <font>
                         <Font size="16.0" />
@@ -48,8 +48,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="stockTable" layoutX="6.0" layoutY="6.0" prefHeight="343.0"
-                                                   prefWidth="980.0">
+                                        <TableView fx:id="stockTable" layoutX="6.0" layoutY="6.0" prefHeight="343.0" prefWidth="980.0">
                                             <columns>
                                                 <TableColumn fx:id="stCode" prefWidth="90.0" text="代码" />
                                                 <TableColumn fx:id="stName" prefWidth="110.0" text="名称" />
@@ -109,7 +108,7 @@
                         </Tab>
                     </tabs>
                 </TabPane>
-                <Label layoutX="11.0" layoutY="18.0" text="大盘备注：">
+                <Label layoutX="11.0" layoutY="46.0" text="大盘备注：">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
@@ -129,15 +128,15 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-            <Label layoutX="784.0" layoutY="128.0" text="上证今日成交额预估">
+            <Label layoutX="784.0" layoutY="145.0" text="上证今日成交额预估">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="785.0" layoutY="157.0" text="15分钟预估值：" />
-            <Label layoutX="786.0" layoutY="186.0" text="30分钟预估值：" />
-            <Label fx:id="quarterVol" layoutX="893.0" layoutY="157.0" prefHeight="20.0" prefWidth="88.0" text="12000.56亿" />
-            <Label fx:id="halfHourVol" layoutX="893.0" layoutY="186.0" prefHeight="20.0" prefWidth="86.0" text="12000.56亿" />
+            <Label layoutX="785.0" layoutY="174.0" text="15分钟预估值：" />
+            <Label layoutX="786.0" layoutY="203.0" text="30分钟预估值：" />
+            <Label fx:id="quarterVol" layoutX="893.0" layoutY="174.0" prefHeight="20.0" prefWidth="88.0" text="12000.56亿" />
+            <Label fx:id="halfHourVol" layoutX="893.0" layoutY="203.0" prefHeight="20.0" prefWidth="86.0" text="12000.56亿" />
             <Label layoutX="881.0" layoutY="704.0" text="Version 1.0" />
             <Label layoutX="6.0" layoutY="660.0">
                <font>
@@ -171,6 +170,17 @@
                </font>
             </Button>
             <Separator layoutX="697.0" layoutY="662.0" orientation="VERTICAL" prefHeight="83.0" prefWidth="6.0" />
+            <Label layoutX="11.0" layoutY="5.0" text="交易本质：">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="93.0" layoutY="6.0" prefHeight="22.0" prefWidth="631.0"
+                   text="干不干？(大环境是否安全)、干什么？(确定标的对象)、干多少？(解决仓位分配)" textFill="#c65454">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </content>
