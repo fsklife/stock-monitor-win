@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,21 +12,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="653.0" prefWidth="983.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fsk.controller.MonitorController">
+<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="740.0" prefWidth="983.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.fsk.controller.MonitorController">
     <content>
-        <AnchorPane maxHeight="745.0" maxWidth="997.0" minHeight="623.0" minWidth="815.0" prefHeight="667.0" prefWidth="990.0">
+        <AnchorPane maxHeight="744.0" maxWidth="1004.0" minHeight="744.0" minWidth="990.0" prefHeight="744.0" prefWidth="1004.0">
             <children>
-                <Button fx:id="startBtn" layoutX="782.0" layoutY="14.0" mnemonicParsing="false" onAction="#monitorStart" text="开始监测">
+                <Button fx:id="startBtn" layoutX="796.0" layoutY="12.0" mnemonicParsing="false" onAction="#monitorStart" prefHeight="35.0" prefWidth="86.0" text="开始监测">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Button>
+                <Button fx:id="stopBtn" layoutX="905.0" layoutY="12.0" mnemonicParsing="false" onAction="#monitorStop" text="停止监测">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="stopBtn" layoutX="890.0" layoutY="14.0" mnemonicParsing="false" onAction="#monitorStop" text="停止监测">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Button>
-                <TableView fx:id="zsTable" layoutX="2.0" layoutY="2.0" prefHeight="118.0" prefWidth="773.0">
+                <TableView fx:id="zsTable" layoutX="6.0" layoutY="118.0" prefHeight="118.0" prefWidth="773.0">
                     <columns>
                         <TableColumn fx:id="name" prefWidth="110.0" text="名称" />
                         <TableColumn fx:id="currentPrice" prefWidth="130.0" text="当前指数" />
@@ -35,19 +36,20 @@
                         <TableColumn fx:id="zsDeltaPrice" prefWidth="130.0" text="涨跌指数" />
                     </columns>
                 </TableView>
-                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="92.0" layoutY="132.0" prefHeight="77.0" prefWidth="684.0" promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^" scrollTop="500.0" wrapText="true" />
-                <Button fx:id="addStockBtn" layoutX="890.0" layoutY="70.0" mnemonicParsing="false" onAction="#addStock" prefHeight="34.0" prefWidth="87.0" text="监控设置">
+                <TextArea fx:id="zsRemarkTextArea" blendMode="SRC_ATOP" editable="false" layoutX="91.0" layoutY="11.0" prefHeight="84.0" prefWidth="684.0" promptText="阐述个人对大盘行情的风险评估，决定“干不干、干多少”，fighting!^_^" scrollTop="500.0" wrapText="true" />
+                <Button fx:id="addStockBtn" layoutX="796.0" layoutY="61.0" mnemonicParsing="false" onAction="#addStock" prefHeight="34.0" prefWidth="87.0" text="监控设置">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <TabPane layoutX="5.0" layoutY="231.0" prefHeight="390.0" prefWidth="971.0" tabClosingPolicy="UNAVAILABLE">
+                <TabPane layoutX="6.0" layoutY="262.0" prefHeight="398.0" prefWidth="983.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab onSelectionChanged="#changeSharesRealData" text="个股实时数据">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="stockTable" layoutX="6.0" layoutY="6.0" prefHeight="343.0" prefWidth="964.0">
+                                        <TableView fx:id="stockTable" layoutX="6.0" layoutY="6.0" prefHeight="343.0"
+                                                   prefWidth="980.0">
                                             <columns>
                                                 <TableColumn fx:id="stCode" prefWidth="90.0" text="代码" />
                                                 <TableColumn fx:id="stName" prefWidth="110.0" text="名称" />
@@ -69,7 +71,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="stockMaTable" layoutX="5.0" layoutY="4.0" prefHeight="345.0" prefWidth="964.0">
+                                        <TableView fx:id="stockMaTable" layoutX="5.0" layoutY="4.0" prefHeight="345.0" prefWidth="980.0">
                                             <columns>
                                                 <TableColumn fx:id="maStName" prefWidth="112.0" text="名称" />
                                                 <TableColumn fx:id="todayMA5" prefWidth="85.0" text="当前5均" />
@@ -91,7 +93,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="962.0">
+                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="980.0">
                                             <columns>
                                                 <TableColumn fx:id="sgStName" prefWidth="80.0" text="名称" />
                                                 <TableColumn fx:id="sgStCurrPrice" prefWidth="70.0" text="现价" />
@@ -107,31 +109,68 @@
                         </Tab>
                     </tabs>
                 </TabPane>
-                <Label layoutX="5.0" layoutY="132.0" text="大盘备注：">
+                <Label layoutX="11.0" layoutY="18.0" text="大盘备注：">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label layoutX="720.0" layoutY="670.0" text="交易时间：">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Label layoutX="790.0" layoutY="133.0" text="日期：">
+                <Label fx:id="transDate" layoutX="800.0" layoutY="670.0" prefHeight="22.0" prefWidth="95.0" text="2020-12-31">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Label layoutX="790.0" layoutY="171.0" text="时间：">
+                <Label fx:id="transTime" layoutX="895.0" layoutY="670.0" prefHeight="22.0" prefWidth="76.0" text="13:30:30">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Label fx:id="transDate" layoutX="838.0" layoutY="133.0" prefHeight="20.0" prefWidth="115.0">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
-                <Label fx:id="transTime" layoutX="837.0" layoutY="171.0" prefHeight="20.0" prefWidth="115.0">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                </Label>
+            <Label layoutX="784.0" layoutY="128.0" text="上证今日成交额预估">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="785.0" layoutY="157.0" text="15分钟预估值：" />
+            <Label layoutX="786.0" layoutY="186.0" text="30分钟预估值：" />
+            <Label fx:id="quarterVol" layoutX="893.0" layoutY="157.0" prefHeight="20.0" prefWidth="88.0" text="12000.56亿" />
+            <Label fx:id="halfHourVol" layoutX="893.0" layoutY="186.0" prefHeight="20.0" prefWidth="86.0" text="12000.56亿" />
+            <Label layoutX="881.0" layoutY="704.0" text="Version 1.0" />
+            <Label layoutX="6.0" layoutY="660.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="93.0" layoutY="666.0" text="买入条件固定死！符合条件，牢记条件！仓位满足直接就干！">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="92.0" layoutY="693.0" prefHeight="49.0" prefWidth="603.0" text="买入条件失败，第二天无理由出局！条件成立，隔日早盘计划条件不达标，先滚为敬，牢记卖飞也是一种幸福！" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="11.0" layoutY="667.0" prefHeight="22.0" prefWidth="76.0" text="买入铁律:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="696.0" prefHeight="22.0" prefWidth="83.0" text="卖出铁律：">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Separator layoutX="-4.0" layoutY="660.0" prefHeight="3.0" prefWidth="997.0" />
+            <Button layoutX="906.0" layoutY="61.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="87.0" text="持仓管理">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Separator layoutX="697.0" layoutY="662.0" orientation="VERTICAL" prefHeight="83.0" prefWidth="6.0" />
             </children>
         </AnchorPane>
     </content>

@@ -27,7 +27,7 @@ public class Main extends Application {
         StageManager.putMainStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         primaryStage.setTitle("Stock Monitor");
-        primaryStage.setScene(new Scene(root, 983, 653));
+        primaryStage.setScene(new Scene(root, 990, 744));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
