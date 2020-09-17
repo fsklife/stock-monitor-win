@@ -5,6 +5,7 @@ import javafx.scene.control.ButtonType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.fsk.Constants;
+import org.fsk.pojo.EstimateShVolDTO;
 import org.fsk.pojo.SettingFileDTO;
 import org.fsk.pojo.SharesDTO;
 import org.fsk.pojo.StockInfoObject;
@@ -121,13 +122,38 @@ public class CommonUtil {
         return addDataFile(JacksonUtil.toJson(fileDTO), getDataFile().getPath());
     }
 
+    public static EstimateShVolDTO getEstimateShVol() {
+        File dataFile = CommonUtil.getShVolFile();
+        if (dataFile != null) {
+            String data = CommonUtil.txt2String(dataFile);
+            data = Base64Util.decodeBase64(data);
+            if (StringUtils.isNoneBlank(data)) {
+                EstimateShVolDTO fileDTO = JacksonUtil.parsePojo(data, EstimateShVolDTO.class);
+                return fileDTO;
+            }
+        }
+        return null;
+    }
+
+    public static boolean updateShVolFile(EstimateShVolDTO fileDTO) {
+        return addDataFile(JacksonUtil.toJson(fileDTO), getShVolFile().getPath());
+    }
+
+    public static File getShVolFile() {
+        return getFile("shVol.txt");
+    }
+
     public static File getDataFile() {
+        return getFile("data.txt");
+    }
+
+    private static File getFile(String fileName) {
         try {
             File dic = new File(FILE_PATH);
             if (!dic.exists() && !dic.isDirectory()) {
                 dic.mkdirs();
             }
-            File file = new File(FILE_PATH + "\\data.txt");
+            File file = new File(FILE_PATH + "\\" + fileName);
             if (!file.exists()) {
                 file.createNewFile();
             }

@@ -1,8 +1,8 @@
 package org.fsk;
 
+import org.fsk.pojo.EstimateShVolDTO;
 import org.fsk.pojo.StockInfoObject;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class Constants {
     public static final String SZ_CODE = "sz399001";
     public static final String CY_CODE = "sz399006";
 
-    public static final int OPEN_TIME = 91500;
+    public static final int OPEN_TIME = 92500;
     public static final int CLOSE_TIME = 150300;
     public static final BigDecimal ZERO_BIG = new BigDecimal("0");
 

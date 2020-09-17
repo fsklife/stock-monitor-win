@@ -14,12 +14,15 @@ import javafx.scene.paint.Color;
 import lombok.Data;
 import org.fsk.Constants;
 import org.fsk.StageManager;
+import org.fsk.pojo.EstimateShVolDTO;
 import org.fsk.pojo.StockInfoObject;
 import org.fsk.pojo.StockTable;
 import org.fsk.pojo.ZsTable;
 import org.fsk.utils.CommonUtil;
+import org.fsk.utils.DateUtil;
 import org.fsk.utils.TransTimeUtil;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -74,11 +77,94 @@ public class MonitorScheduledService extends ScheduledService<Void> {
             public void run() {
                 transDate.setText(Constants.monitorSh.getDate());
                 transTime.setText(Constants.monitorSh.getTime());
-                if (!TransTimeUtil.isTransTime() || TransTimeUtil.isLunchBreak()) {
+                boolean transTime = TransTimeUtil.isTransTime();
+                boolean resetVol = true;
+                EstimateShVolDTO estimateShVol = CommonUtil.getEstimateShVol();
+                if (estimateShVol != null) {
+                    // 存在数据
+                    String day = estimateShVol.getDay();
+                    // 是当前时间的
+                    if (Constants.monitorSh.getDate().equals(day)) {
+                        resetVol = false;
+                    }
+                }
+                if (resetVol && transTime) {
+                    estimateShVol = calculateVol();
+                    CommonUtil.updateShVolFile(estimateShVol);
+                }
+                if (estimateShVol != null) {
+                    StageManager.getMainCtrl().quarterVol.setText(estimateShVol.getQuarterVol());
+                    StageManager.getMainCtrl().halfHourVol.setText(estimateShVol.getHalfHourVol());
+                }
+                if (!transTime || TransTimeUtil.isLunchBreak()) {
                     StageManager.getMainCtrl().stopMonitor();
                 }
             }
         });
+    }
+
+    private EstimateShVolDTO calculateVol() {
+        EstimateShVolDTO estimateShVol = EstimateShVolDTO.builder().build();
+        estimateShVol.setDay(Constants.monitorSh.getDate());
+        // 偏离不会超过当天总成交的8%，准确率90%
+        String time = DateUtil.getHHmmss();
+        int timeInt = Integer.parseInt(time);
+        String volPrice = Constants.monitorSh.getVolPrice();
+        BigDecimal volBig = new BigDecimal(volPrice.replace("亿", ""));
+
+        if (timeInt > 94455 && timeInt < 94505) {
+            // 计算45分钟
+            BigDecimal quarter = calculateVolByQuarter(volBig);
+            estimateShVol.setQuarterVol(quarter.doubleValue() + "亿");
+        }
+
+        if (timeInt > 95955 && timeInt < 100005) {
+            BigDecimal halfHour = calculateVolByHalfHour(volBig);
+            estimateShVol.setHalfHourVol(halfHour.doubleValue() + "亿");
+        }
+
+        return estimateShVol;
+    }
+
+    private BigDecimal calculateVolByQuarter(BigDecimal volBig) {
+        BigDecimal times = new BigDecimal("1");
+        // 第一个15分钟
+        if (volBig.doubleValue() < 400) {
+            // *7
+            times = new BigDecimal("7");
+        } else if (volBig.doubleValue() >= 400 && volBig.doubleValue() < 600) {
+            // *6
+            times = new BigDecimal("6");
+        } else if (volBig.doubleValue() >= 600 && volBig.doubleValue() < 900) {
+            // *5.5
+            times = new BigDecimal("5.5");
+        } else if (volBig.doubleValue() >= 900) {
+            // *5
+            times = new BigDecimal("5");
+        }
+        return volBig.multiply(times).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    /**
+     * 偏离不会超过当天总成交的8%，准确率90%
+     *
+     * @param volBig
+     * @return
+     */
+    private BigDecimal calculateVolByHalfHour(BigDecimal volBig) {
+        BigDecimal times = new BigDecimal("1");
+        // 第一个30分钟
+        if (volBig.doubleValue() < 600) {
+            // *4
+            times = new BigDecimal("4");
+        } else if (volBig.doubleValue() >= 600 && volBig.doubleValue() < 900) {
+            // *3.8
+            times = new BigDecimal("3.8");
+        } else if (volBig.doubleValue() >= 900) {
+            // *3.5
+            times = new BigDecimal("3.5");
+        }
+        return volBig.multiply(times).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public void execute() {

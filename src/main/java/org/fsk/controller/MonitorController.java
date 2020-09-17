@@ -65,6 +65,10 @@ public class MonitorController implements Initializable {
     public Label transDate;
     @FXML
     public Button startBtn;
+    @FXML
+    public Label quarterVol;
+    @FXML
+    public Label halfHourVol;
 
     public static Map<String, Object> map = new HashMap<>();
 
