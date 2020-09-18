@@ -116,6 +116,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.fxml</include>
                     <include>**/fxml/*.fxml</include>
+                    <include>**/static/*.png</include>
                     <!-- 如果想要弄个包名专门放fxml文件，像上一行这样添加设置 -->
                     <!-- 之后，使用getResource("fxml/xx.fxml")这样子 -->
                 </includes>

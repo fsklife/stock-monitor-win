@@ -18,9 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.fsk.Constants;
+import org.fsk.Main;
 import org.fsk.pojo.SettingFileDTO;
 import org.fsk.pojo.SharesDTO;
 import org.fsk.pojo.SharesListTable;
@@ -28,6 +31,7 @@ import org.fsk.pojo.StockInfoObject;
 import org.fsk.pojo.StockMarketDTO;
 import org.fsk.utils.CommonUtil;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -105,8 +109,14 @@ public class SettingController implements Initializable {
                             this.setGraphic(null);
 
                             if (!empty) {
-                                /*String delPath = getClass().getResourceAsStream("del.png").toString();
-                                ImageView delICON = new ImageView(delPath);*/
+                                /*URL url = Main.class.getResource("static/del.png");
+                                Image image = null;
+                                try {
+                                    image = new Image(url.openStream());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                ImageView delICON = new ImageView(image);*/
                                 Button delBtn = new Button("删除");
                                 this.setGraphic(delBtn);
                                 delBtn.setOnMouseClicked((me) -> {

@@ -5,8 +5,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.net.URL;
 
 /**
  * @author 27260
@@ -25,8 +28,11 @@ public class Main extends Application {
             }
         });
         StageManager.putMainStage(primaryStage);
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/main.fxml"));
         primaryStage.setTitle("Stock Monitor");
+        //设置窗口的图标.
+        URL url = getClass().getResource("static/title_ico.png");
+        primaryStage.getIcons().add(new Image(url.openStream()));
         primaryStage.setScene(new Scene(root, 990, 744));
         primaryStage.setResizable(false);
         primaryStage.show();

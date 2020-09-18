@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class SettingApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("setting.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/setting.fxml"));
         primaryStage.setTitle("监控设置");
         primaryStage.setScene(new Scene(root, 516, 366));
         primaryStage.initModality(Modality.WINDOW_MODAL);
