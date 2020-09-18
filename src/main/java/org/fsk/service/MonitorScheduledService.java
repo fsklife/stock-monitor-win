@@ -118,13 +118,13 @@ public class MonitorScheduledService extends ScheduledService<Void> {
         String volPrice = Constants.monitorSh.getVolPrice();
         BigDecimal volBig = new BigDecimal(volPrice.replace("亿", ""));
 
-        if (timeInt > 112901 && timeInt < 112935) {
+        if (timeInt > 94455 && timeInt < 94501) {
             // 计算45分钟
             BigDecimal quarter = calculateVolByQuarter(volBig);
             estimateShVol.setQuarterVol(quarter.doubleValue() + "亿");
         }
 
-        if (timeInt > 112955 && timeInt < 113005) {
+        if (timeInt > 95955 && timeInt < 100001) {
             BigDecimal halfHour = calculateVolByHalfHour(volBig);
             estimateShVol.setHalfHourVol(halfHour.doubleValue() + "亿");
         }
