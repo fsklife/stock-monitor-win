@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.fsk.Constants;
 import org.fsk.StageManager;
 import org.fsk.pojo.EstimateShVolDTO;
@@ -81,15 +82,18 @@ public class MonitorScheduledService extends ScheduledService<Void> {
                 boolean resetVol = true;
                 EstimateShVolDTO estimateShVol = CommonUtil.getEstimateShVol();
                 if (estimateShVol != null) {
+                    String quarterVol = estimateShVol.getQuarterVol();
                     // 存在数据
                     String day = estimateShVol.getDay();
                     // 是当前时间的
-                    if (Constants.monitorSh.getDate().equals(day)) {
+                    if (Constants.monitorSh.getDate().equals(day)
+                            && StringUtils.isNoneBlank(estimateShVol.getQuarterVol())
+                            && StringUtils.isNoneBlank(estimateShVol.getHalfHourVol())) {
                         resetVol = false;
                     }
                 }
                 if (resetVol && transTime) {
-                    estimateShVol = calculateVol();
+                    estimateShVol = calculateVol(estimateShVol);
                     CommonUtil.updateShVolFile(estimateShVol);
                 }
                 if (estimateShVol != null) {
@@ -103,8 +107,10 @@ public class MonitorScheduledService extends ScheduledService<Void> {
         });
     }
 
-    private EstimateShVolDTO calculateVol() {
-        EstimateShVolDTO estimateShVol = EstimateShVolDTO.builder().build();
+    private EstimateShVolDTO calculateVol(EstimateShVolDTO estimateShVol) {
+        if (estimateShVol == null) {
+            estimateShVol = EstimateShVolDTO.init();
+        }
         estimateShVol.setDay(Constants.monitorSh.getDate());
         // 偏离不会超过当天总成交的8%，准确率90%
         String time = DateUtil.getHHmmss();
@@ -112,13 +118,13 @@ public class MonitorScheduledService extends ScheduledService<Void> {
         String volPrice = Constants.monitorSh.getVolPrice();
         BigDecimal volBig = new BigDecimal(volPrice.replace("亿", ""));
 
-        if (timeInt > 94455 && timeInt < 94505) {
+        if (timeInt > 112901 && timeInt < 112935) {
             // 计算45分钟
             BigDecimal quarter = calculateVolByQuarter(volBig);
             estimateShVol.setQuarterVol(quarter.doubleValue() + "亿");
         }
 
-        if (timeInt > 95955 && timeInt < 100005) {
+        if (timeInt > 112955 && timeInt < 113005) {
             BigDecimal halfHour = calculateVolByHalfHour(volBig);
             estimateShVol.setHalfHourVol(halfHour.doubleValue() + "亿");
         }
