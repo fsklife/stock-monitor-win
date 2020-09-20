@@ -14,6 +14,7 @@ public class StrategyTable {
     private String sgStCurrPrice;
     private String stCutPrice;
     private String stCutRate;
-    private String stBuyCondition;
+    private String stCostPrice;
+    private String stProfitLossRatio;
     private String stRemark;
 }

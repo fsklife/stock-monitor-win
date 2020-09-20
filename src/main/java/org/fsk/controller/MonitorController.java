@@ -105,9 +105,14 @@ public class MonitorController implements Initializable {
         sharesList.forEach(sharesDTO -> {
             Constants.stockSet.add(sharesDTO.getCode());
             StockInfoObject stockInfoObject = Constants.monitorStockMap.get(sharesDTO.getCode());
+            String costPrice = sharesDTO.getCostPrice();
+            if (StringUtils.isBlank(costPrice)) {
+                costPrice = Constants.ZERO_BIG.doubleValue() + "";
+            }
             // 操作策略
             StrategyTable strategyTable = StrategyTable.builder().sgStName(sharesDTO.getName())
-                    .stCutPrice(sharesDTO.getCutPrice()).stBuyCondition(sharesDTO.getBuyCondition())
+                    .stCutPrice(sharesDTO.getCutPrice()).stCostPrice(costPrice)
+                    .stProfitLossRatio(CommonUtil.getPriceRate(stockInfoObject.getCurrentPrice(), costPrice))
                     .stRemark(sharesDTO.getOptStrategy()).sgStCurrPrice(stockInfoObject.getCurrentPrice())
                     .stCutRate(CommonUtil.getPriceRate(stockInfoObject.getCurrentPrice(), sharesDTO.getCutPrice()))
                     .build();
@@ -134,7 +139,7 @@ public class MonitorController implements Initializable {
                         Text text = new Text();
                         this.setGraphic(text);
                         this.setPrefHeight(Control.USE_COMPUTED_SIZE);
-                        if (rowMap.getStCutRate().contains("-")) {
+                        if (rowMap.getStProfitLossRatio().contains("-")) {
                             text.setFill(Color.GREEN);
                         } else {
                             text.setFill(Color.RED);

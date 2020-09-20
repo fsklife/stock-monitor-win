@@ -18,12 +18,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.fsk.Constants;
-import org.fsk.Main;
 import org.fsk.pojo.SettingFileDTO;
 import org.fsk.pojo.SharesDTO;
 import org.fsk.pojo.SharesListTable;
@@ -31,7 +28,6 @@ import org.fsk.pojo.StockInfoObject;
 import org.fsk.pojo.StockMarketDTO;
 import org.fsk.utils.CommonUtil;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -54,11 +50,13 @@ public class SettingController implements Initializable {
     public TextArea zsRemarkTextArea;
     public TextField addCodeText;
     public TextField addCutPriceText;
+    public TextField addBuyCostText;
     public TextField addBuyText;
     public TextArea addOptStgText;
     public ChoiceBox<String> updateChoiceBox;
     public TextField updateCutPriceText;
     public TextField updateBuyText;
+    public TextField updateBuyCostText;
     public TextArea updateOptStgText;
     public TableView sharesListTable;
     @FXML
@@ -178,6 +176,8 @@ public class SettingController implements Initializable {
                         SharesDTO sharesDTO = sharesDTOMap.get(newValue);
                         updateCutPriceText.setText(sharesDTO.getCutPrice());
                         updateBuyText.setText(sharesDTO.getBuyCondition());
+                        String costPrice = sharesDTO.getCostPrice();
+                        updateBuyCostText.setText(StringUtils.isBlank(costPrice) ? "0.00" : costPrice);
                         updateOptStgText.setText(sharesDTO.getOptStrategy());
                     }
                 };
@@ -248,6 +248,12 @@ public class SettingController implements Initializable {
         sharesDTO.setName(stockInfoObject.getGpName());
         BigDecimal cutPriceBig = new BigDecimal(cutPriceText).setScale(2, BigDecimal.ROUND_HALF_DOWN);
         sharesDTO.setCutPrice(cutPriceBig.doubleValue() + "");
+        String buyCostText = addBuyCostText.getText();
+        BigDecimal buyCostBig = Constants.ZERO_BIG;
+        if (StringUtils.isNoneBlank(buyCostText)) {
+            buyCostBig = new BigDecimal(buyCostText).setScale(3, BigDecimal.ROUND_HALF_UP);
+        }
+        sharesDTO.setCostPrice(buyCostBig.doubleValue() + "");
         sharesDTO.setBuyCondition(addBuyText.getText());
         sharesDTO.setOptStrategy(addOptStgText.getText());
         SettingFileDTO settingFile = CommonUtil.getSettingFile();
@@ -287,6 +293,11 @@ public class SettingController implements Initializable {
             return;
         }
         cutPriceText = cutPriceText.trim();
+        String buyCostText = updateBuyCostText.getText();
+        if (StringUtils.isBlank(buyCostText)) {
+            buyCostText = "0.0";
+        }
+        buyCostText = buyCostText.trim();
         StockInfoObject stockInfoObject = Constants.monitorStockMap.get(code);
         SharesDTO sharesDTO = new SharesDTO();
         sharesDTO.setCode(code);
@@ -304,6 +315,7 @@ public class SettingController implements Initializable {
         if (sharesDTOMap.containsKey(code)) {
             SharesDTO hasShares = sharesDTOMap.get(code);
             hasShares.setCutPrice(cutPriceText);
+            hasShares.setCostPrice(buyCostText);
             hasShares.setBuyCondition(updateBuyText.getText());
             hasShares.setOptStrategy(updateOptStgText.getText());
         }

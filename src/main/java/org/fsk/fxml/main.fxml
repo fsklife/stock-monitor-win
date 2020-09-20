@@ -92,14 +92,15 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="980.0">
+                                        <TableView fx:id="strategyTable" layoutX="6.0" layoutY="3.0" prefHeight="346.0" prefWidth="977.0">
                                             <columns>
-                                                <TableColumn fx:id="sgStName" prefWidth="80.0" text="名称" />
-                                                <TableColumn fx:id="sgStCurrPrice" prefWidth="70.0" text="现价" />
-                                                <TableColumn fx:id="stCutPrice" prefWidth="70.0" text="止损价格" />
-                                                <TableColumn fx:id="stCutRate" prefWidth="70.0" text="止损幅度" />
-                                                <TableColumn fx:id="stBuyCondition" prefWidth="205.0" text="买入条件" />
-                                                <TableColumn fx:id="stRemark" prefWidth="465.0" text="操作策略说明" />
+                                                <TableColumn fx:id="sgStName" prefWidth="90.0" text="名称" />
+                                                <TableColumn fx:id="sgStCurrPrice" prefWidth="80.0" text="现价" />
+                                                <TableColumn fx:id="stCutPrice" prefWidth="80.0" text="止损价格" />
+                                                <TableColumn fx:id="stCutRate" prefWidth="80.0" text="止损幅度" />
+                                                <TableColumn fx:id="stCostPrice" prefWidth="80.0" text="持仓成本" />
+                                                <TableColumn fx:id="stProfitLossRatio" prefWidth="82.0" text="盈亏比" />
+                                                <TableColumn fx:id="stRemark" prefWidth="460.0" text="操作策略说明" />
                                             </columns>
                                         </TableView>
                                     </children>
@@ -135,10 +136,8 @@
             </Label>
             <Label layoutX="785.0" layoutY="174.0" text="15分钟预估值：" />
             <Label layoutX="786.0" layoutY="203.0" text="30分钟预估值：" />
-            <Label fx:id="quarterVol" layoutX="893.0" layoutY="174.0" prefHeight="20.0" prefWidth="88.0"
-                   text="---" />
-            <Label fx:id="halfHourVol" layoutX="893.0" layoutY="203.0" prefHeight="20.0" prefWidth="86.0"
-                   text="---" />
+            <Label fx:id="quarterVol" layoutX="893.0" layoutY="174.0" prefHeight="20.0" prefWidth="88.0" text="---" />
+            <Label fx:id="halfHourVol" layoutX="893.0" layoutY="203.0" prefHeight="20.0" prefWidth="86.0" text="---" />
             <Label layoutX="881.0" layoutY="704.0" text="Version 1.0" />
             <Label layoutX="6.0" layoutY="660.0">
                <font>
@@ -166,7 +165,8 @@
                </font>
             </Label>
             <Separator layoutX="-4.0" layoutY="660.0" prefHeight="3.0" prefWidth="997.0" />
-            <Button layoutX="906.0" layoutY="61.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="87.0" text="持仓管理">
+            <Button layoutX="906.0" layoutY="61.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="87.0"
+                    text="交易模型">
                <font>
                   <Font size="16.0" />
                </font>
@@ -177,8 +177,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="93.0" layoutY="6.0" prefHeight="22.0" prefWidth="631.0"
-                   text="干不干？(大环境是否安全)、干什么？(确定标的对象)、干多少？(解决仓位分配)" textFill="#c65454">
+            <Label layoutX="93.0" layoutY="6.0" prefHeight="22.0" prefWidth="631.0" text="干不干？(大环境是否安全)、干什么？(确定标的对象)、干多少？(解决仓位分配)" textFill="#c65454">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

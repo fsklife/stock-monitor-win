@@ -11,6 +11,10 @@ public class SharesDTO {
     private String code;
     private String name;
     private String cutPrice;
+    /**
+     * 持仓成本
+     */
+    private String costPrice;
     private String buyCondition;
     private String optStrategy;
 }
