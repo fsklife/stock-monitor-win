@@ -108,7 +108,7 @@ public class MonitorScheduledService extends ScheduledService<Void> {
     }
 
     private EstimateShVolDTO calculateVol(EstimateShVolDTO estimateShVol) {
-        if (estimateShVol == null) {
+        if (estimateShVol == null || !Constants.monitorSh.getDate().equals(estimateShVol.getDay())) {
             estimateShVol = EstimateShVolDTO.init();
         }
         estimateShVol.setDay(Constants.monitorSh.getDate());
@@ -118,13 +118,13 @@ public class MonitorScheduledService extends ScheduledService<Void> {
         String volPrice = Constants.monitorSh.getVolPrice();
         BigDecimal volBig = new BigDecimal(volPrice.replace("亿", ""));
 
-        if (timeInt > 94455 && timeInt < 94501) {
+        if (timeInt > 94455 && timeInt < 94505) {
             // 计算45分钟
             BigDecimal quarter = calculateVolByQuarter(volBig);
             estimateShVol.setQuarterVol(quarter.doubleValue() + "亿");
         }
 
-        if (timeInt > 95955 && timeInt < 100001) {
+        if (timeInt > 95955 && timeInt < 100005) {
             BigDecimal halfHour = calculateVolByHalfHour(volBig);
             estimateShVol.setHalfHourVol(halfHour.doubleValue() + "亿");
         }
